@@ -13,8 +13,7 @@ def generate_test(request):
     import json
 
     # Define the path where the files are located
-    files_path = '/home/jorgeiras/oposite-back/files/*.txt'  # Replace with the actual file path pattern
-
+    files_path = '/home/AsketeP/BackOFTest/files/*.txt'  # Replace with the actual file path pattern
  
     # Initialize variables
     all_questions = []
