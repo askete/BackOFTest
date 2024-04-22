@@ -95,10 +95,10 @@ WSGI_APPLICATION = 'opositeback.wsgi.application'
 DATABASES = {
    'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'jorgeiras$obfundb',
-        'USER': 'jorgeiras',
+        'NAME': 'AsketeP$obfundb',
+        'USER': 'AsketeP',
         'PASSWORD': 'objetivofuncionario',
-        'HOST': 'jorgeiras.mysql.pythonanywhere-services.com',
+        'HOST': 'AsketeP.mysql.pythonanywhere-services.com',
         'PORT': '3306',
     }
 }
