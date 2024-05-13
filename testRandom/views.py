@@ -3,9 +3,25 @@ from django.http import JsonResponse
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 
+
+
+from django.contrib.auth.models import User
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+
+
+
+
+from rest_framework import viewsets
+from rest_framework.permissions import AllowAny
+from .serializers import UserSerializer
+
+
 @api_view(['GET']) 
 @permission_classes([IsAuthenticated])
 def generate_test(request):
+    
     
     import glob
     import random
@@ -110,3 +126,42 @@ def generate_test(request):
 
     # Return the JSON response
     return JsonResponse(json.loads(json_data), json_dumps_params={'indent': 4})
+
+
+
+
+
+
+
+
+    
+
+
+@api_view(['POST'])
+def register_user(request):
+    # Verificar que la solicitud sea de tipo POST
+    if request.method == 'POST':
+        # Obtener datos del cuerpo de la solicitud
+        username = request.data.get('username')
+        email = request.data.get('email')
+        password = request.data.get('password')
+        tipo = request.data.get('a')
+        # Crear un nuevo usuario
+        try:
+            user = User.objects.create_user(username=username, email=email, password=password)
+            return Response(status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response({'error': 'Only POST requests are allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]  # You can customize the permissions as needed
+
+    def get_queryset(self):
+        return self.queryset.filter(username=self.request.user.username)
